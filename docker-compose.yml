@@ -1,0 +1,19 @@
+version: "3.8"
+services:
+  php:
+    container_name: php
+    build:
+      context: ./infrastructure/php
+      dockerfile: Dockerfile
+    volumes:
+    - ./:/var/www/html:cached
+    working_dir: /var/www/html
+
+  composer:
+    container_name: composer
+    build:
+      context: ./infrastructure/composer
+      dockerfile: Dockerfile
+    volumes:
+    - ./:/src
+    working_dir: /src

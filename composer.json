@@ -1,0 +1,26 @@
+{
+    "name": "nonz250/storage-php-client",
+    "description": "This is nonz250's storage api client.",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "StoragePhpClient\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Nozomi Hosaka",
+            "email": "hosaka.non.work@gmail.com"
+        }
+    ],
+    "scripts": {
+        "setup": [
+            "composer install",
+            "composer dump-autoload"
+        ]
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    }
+}
