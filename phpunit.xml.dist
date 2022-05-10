@@ -10,7 +10,7 @@
     </include>
   </coverage>
   <testsuites>
-    <testsuite name="OGP">
+    <testsuite name="StorageClient">
       <directory>./tests</directory>
     </testsuite>
   </testsuites>
