@@ -7,14 +7,15 @@ use Fig\Http\Message\RequestMethodInterface;
 use Http\Discovery\Psr17FactoryDiscovery;
 use JsonSerializable;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\StreamFactoryInterface;
 use StoragePhpClient\Foundation\ApiParam;
 use StoragePhpClient\Foundation\Credential;
 use StoragePhpClient\Foundation\RequestFactory;
-use PHPUnit\Framework\TestCase;
 
 /**
  * @see RequestFactory
+ *
  * @coversDefaultClass \StoragePhpClient\Foundation\RequestFactory
  */
 final class RequestFactoryTest extends TestCase
@@ -28,7 +29,6 @@ final class RequestFactoryTest extends TestCase
         self::$credential = new Credential('https://foo:bar@example.com', 'nonce');
     }
 
-
     public function test__construct(): void
     {
         $requestFactory = new RequestFactory(
@@ -40,6 +40,7 @@ final class RequestFactoryTest extends TestCase
 
     /**
      * @return void
+     *
      * @covers ::buildUriString
      */
     public function testBuildUrlString(): void
@@ -63,9 +64,9 @@ final class RequestFactoryTest extends TestCase
     }
 
     /**
-     * @test GETリクエストの作成を検証する
+     * GETリクエストの作成を検証する.
      */
-    public function createGetRequest(): void
+    public function testCreateGetRequest(): void
     {
         $requestFactory = new RequestFactory(
             Psr17FactoryDiscovery::findRequestFactory(),
@@ -85,9 +86,9 @@ final class RequestFactoryTest extends TestCase
     }
 
     /**
-     * @test リクエストヘッダーを含むGETリクエストの作成を検証する
+     * リクエストヘッダーを含むGETリクエストの作成を検証する.
      */
-    public function createGetRequestWithHeader(): void
+    public function testCreateGetRequestWithHeader(): void
     {
         $requestFactory = new RequestFactory(
             Psr17FactoryDiscovery::findRequestFactory(),
@@ -110,9 +111,9 @@ final class RequestFactoryTest extends TestCase
     }
 
     /**
-     * @test クエリパラメーターを含むGETリクエストの作成を検証する
+     * クエリパラメーターを含むGETリクエストの作成を検証する.
      */
-    public function createGetRequestWithQuery(): void
+    public function testCreateGetRequestWithQuery(): void
     {
         $requestFactory = new RequestFactory(
             Psr17FactoryDiscovery::findRequestFactory(),
@@ -135,9 +136,9 @@ final class RequestFactoryTest extends TestCase
     }
 
     /**
-     * @test POSTリクエストの作成を検証する
+     * POSTリクエストの作成を検証する.
      */
-    public function createPostRequest(): void
+    public function testCreatePostRequest(): void
     {
         $requestFactory = new RequestFactory(
             Psr17FactoryDiscovery::findRequestFactory(),
@@ -157,9 +158,9 @@ final class RequestFactoryTest extends TestCase
     }
 
     /**
-     * @test リクエストボディを含むPOSTリクエストの作成を検証する
+     * リクエストボディを含むPOSTリクエストの作成を検証する.
      */
-    public function createPostRequestWithBody(): void
+    public function testCreatePostRequestWithBody(): void
     {
         $requestFactory = new RequestFactory(
             Psr17FactoryDiscovery::findRequestFactory(),
@@ -191,9 +192,9 @@ final class RequestFactoryTest extends TestCase
     }
 
     /**
-     * @test PUTリクエストの作成を検証する
+     * PUTリクエストの作成を検証する.
      */
-    public function createPutRequest(): void
+    public function testCreatePutRequest(): void
     {
         $requestFactory = new RequestFactory(
             Psr17FactoryDiscovery::findRequestFactory(),
@@ -213,9 +214,9 @@ final class RequestFactoryTest extends TestCase
     }
 
     /**
-     * @test PATCHリクエストの作成を検証する
+     * PATCHリクエストの作成を検証する.
      */
-    public function createPatchRequest(): void
+    public function testCreatePatchRequest(): void
     {
         $requestFactory = new RequestFactory(
             Psr17FactoryDiscovery::findRequestFactory(),
@@ -235,9 +236,9 @@ final class RequestFactoryTest extends TestCase
     }
 
     /**
-     * @test DELETEリクエストの作成を検証する
+     * DELETEリクエストの作成を検証する.
      */
-    public function createDeleteRequest(): void
+    public function testCreateDeleteRequest(): void
     {
         $requestFactory = new RequestFactory(
             Psr17FactoryDiscovery::findRequestFactory(),
@@ -256,11 +257,12 @@ final class RequestFactoryTest extends TestCase
         $this->assertSame('', $request->getHeaderLine('Content-Type'));
     }
 
-
     /**
-     * {@link ApiParam のモックを作成する}
+     * {@link ApiParam のモックを作成する}.
+     *
      * @param string $method
      * @param string $path
+     *
      * @return ApiParam&MockObject
      */
     private function createApiParamMock(string $method, string $path): ApiParam&MockObject

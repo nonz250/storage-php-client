@@ -5,8 +5,8 @@ namespace Foundation;
 
 use Generator;
 use InvalidArgumentException;
-use StoragePhpClient\Foundation\Credential;
 use PHPUnit\Framework\TestCase;
+use StoragePhpClient\Foundation\Credential;
 
 final class CredentialTest extends TestCase
 {
@@ -22,7 +22,9 @@ final class CredentialTest extends TestCase
 
     /**
      * @dataProvider invalidCredentialProvider
+     *
      * @param string $dsn
+     *
      * @return void
      */
     public function testInvalidCredential(string $dsn): void
@@ -49,6 +51,7 @@ final class CredentialTest extends TestCase
 
     /**
      * @dataProvider credentialProvider
+     *
      * @param string $dsn
      * @param string $endpoint
      * @param string $clientId
@@ -59,6 +62,7 @@ final class CredentialTest extends TestCase
      * @param int $nonceCount
      * @param string $qop
      * @param string $cnonce
+     *
      * @return void
      */
     public function testCredential(
@@ -89,7 +93,7 @@ final class CredentialTest extends TestCase
         $expectedPath = '/foo';
         $nc = sprintf('%08x', $nonceCount + 1);
 
-        // @see https://tex2e.github.io/rfc-translater/html/rfc7616.html
+        /** @see https://tex2e.github.io/rfc-translater/html/rfc7616.html */
         $A1 = hash($algorithm, "$clientId:$realm:$clientSecret");
         $A2 = hash($algorithm, "$expectedMethod:$expectedPath");
         $validResponse = hash($algorithm, "$A1:$nonce:$nc:$cnonce:$qop:$A2");

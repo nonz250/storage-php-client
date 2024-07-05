@@ -22,6 +22,7 @@ final class RequestFactory
      * @param string $endpoint
      * @param string $path
      * @param array<string, mixed> $queryParams
+     *
      * @return string
      */
     public static function buildUriString(string $endpoint, string $path, array $queryParams): string
@@ -33,6 +34,7 @@ final class RequestFactory
         $uri = $endpoint . $path;
 
         $queryString = self::buildQueryString($queryParams);
+
         if ($queryString !== '') {
             $uri .= '?' . $queryString;
         }
@@ -42,6 +44,7 @@ final class RequestFactory
 
     /**
      * @param array $queryParams
+     *
      * @return string
      */
     public static function buildQueryString(array $queryParams): string
@@ -56,6 +59,7 @@ final class RequestFactory
     /**
      * @param Credential $credential
      * @param ApiParam $apiParam
+     *
      * @return RequestInterface
      */
     public function create(Credential $credential, ApiParam $apiParam): RequestInterface
@@ -75,6 +79,7 @@ final class RequestFactory
         ));
 
         $body = $apiParam->getBody();
+
         if ($body instanceof JsonSerializable) {
             // 現状は application/json のみ
             try {

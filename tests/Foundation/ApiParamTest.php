@@ -3,14 +3,14 @@ declare(strict_types=1);
 
 namespace Foundation;
 
-use StoragePhpClient\Foundation\ApiParam;
 use PHPUnit\Framework\TestCase;
+use StoragePhpClient\Foundation\ApiParam;
 
 final class ApiParamTest extends TestCase
 {
     public function testNoBody(): void
     {
-        $apiParam = new class extends ApiParam {
+        $apiParam = new class() extends ApiParam {
             public function getMethod(): string
             {
                 return 'GET';

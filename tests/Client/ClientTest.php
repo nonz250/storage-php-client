@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 use StoragePhpClient\Client\Client;
 use StoragePhpClient\Client\ClientInterface;
 
-class ClientTest extends TestCase
+final class ClientTest extends TestCase
 {
     public function test__construct(): ClientInterface
     {

@@ -11,7 +11,7 @@ use JsonSerializable;
 abstract class ApiParam
 {
     /**
-     * {@link RequestMethodInterface で定義されている定数の中から返す。}
+     * {@link RequestMethodInterface で定義されている定数の中から返す。}.
      */
     abstract public function getMethod(): string;
 

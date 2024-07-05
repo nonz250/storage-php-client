@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace StoragePhpClient\Foundation;
 
-use http\Exception\RuntimeException;
 use InvalidArgumentException;
 
 final class Credential
@@ -13,14 +12,16 @@ final class Credential
     ];
 
     private readonly string $endpoint;
+
     private readonly string $clientId;
+
     private readonly string $clientSecret;
 
     public function __construct(
         private readonly string $dsn,
         private readonly string $nonce,
         private readonly string $realm = 'Secret Zone',
-        private  int $nonceCount = 0,
+        private int $nonceCount = 0,
         private readonly ?string $cnonce = null
     ) {
         ['endpoint' => $this->endpoint, 'authority' => $authority] = self::parseDsn($this->dsn);
@@ -30,23 +31,6 @@ final class Credential
         }
         [$this->clientId, $this->clientSecret] = explode(':', $authority);
     }
-
-    /**
-     * @param string $dsn
-     * @return array{endpoint: string, authority: string}
-     */
-    private static function parseDsn(string $dsn): array
-    {
-        if (preg_match('#\A(?<scheme>https?://)((?<authority>\S[^@]+)@)?(?<host>\S+)\z#', $dsn, $matches) === false) {
-            return ['endpoint' => '', 'authority' => '']; // @codeCoverageIgnore
-        }
-
-        return [
-            'endpoint' => sprintf('%s%s', $matches['scheme'] ?? '', $matches['host'] ?? ''),
-            'authority' => $matches['authority'] ?? '',
-        ];
-    }
-
 
     /**
      * @codeCoverageIgnore
@@ -74,8 +58,10 @@ final class Credential
 
     /**
      * @see https://tex2e.github.io/rfc-translater/html/rfc7616.html
+     *
      * @param string $method
      * @param string $path
+     *
      * @return string
      */
     public function authorizationDigest(string $method, string $path): string
@@ -107,5 +93,22 @@ final class Credential
     public function getEndpoint(): string
     {
         return $this->endpoint;
+    }
+
+    /**
+     * @param string $dsn
+     *
+     * @return array{endpoint: string, authority: string}
+     */
+    private static function parseDsn(string $dsn): array
+    {
+        if (preg_match('#\A(?<scheme>https?://)((?<authority>\S[^@]+)@)?(?<host>\S+)\z#', $dsn, $matches) === false) {
+            return ['endpoint' => '', 'authority' => '']; // @codeCoverageIgnore
+        }
+
+        return [
+            'endpoint' => sprintf('%s%s', $matches['scheme'] ?? '', $matches['host'] ?? ''),
+            'authority' => $matches['authority'] ?? '',
+        ];
     }
 }
