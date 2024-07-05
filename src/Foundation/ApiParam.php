@@ -11,21 +11,16 @@ use JsonSerializable;
 abstract class ApiParam
 {
     /**
-     * HTTPリクエストメソッド
-     *
-     * {@link RequestMethodInterface} で定義されている定数の中から返す。
+     * {@link RequestMethodInterface で定義されている定数の中から返す。}
      */
     abstract public function getMethod(): string;
 
     /**
-     * リクエストパス
-     *
      * APIエンドポイントのパス部分の文字列を返す。
      */
     abstract public function getPath(): string;
 
     /**
-     * リクエストヘッダー配列
      * @return array<string, string>
      */
     public function getHeaders(): array
@@ -33,9 +28,6 @@ abstract class ApiParam
         return [];
     }
 
-    /**
-     * リクエストボディ
-     */
     public function getBody(): ?JsonSerializable
     {
         if ($this instanceof JsonSerializable) {
@@ -46,7 +38,6 @@ abstract class ApiParam
     }
 
     /**
-     * クエリパラメーター配列
      * @return array<string, string>
      */
     public function getQueryParams(): array
