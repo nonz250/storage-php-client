@@ -1,4 +1,4 @@
-FROM php:7.4-fpm-alpine
+FROM php:8.1-fpm-alpine
 
 WORKDIR /var/www/html
 
@@ -9,6 +9,7 @@ ARG PHP_MANUAL_URL=http://psysh.org/manual/ja/php_manual.sqlite
 RUN set -eux && \
     apk update && \
     apk add --update --no-cache --virtual=.build-dependencies \
+        linux-headers \
         autoconf \
         gcc \
         g++ \
@@ -25,7 +26,7 @@ RUN set -eux && \
     docker-php-ext-enable xdebug && \
     mkdir $PSYSH_DIR && wget $PHP_MANUAL_URL -P $PSYSH_DIR
 
-RUN curl -L https://github.com/FriendsOfPHP/PHP-CS-Fixer/releases/download/v3.1.0/php-cs-fixer.phar -o php-cs-fixer && \
+RUN curl -L https://github.com/FriendsOfPHP/PHP-CS-Fixer/releases/download/v3.9.5/php-cs-fixer.phar -o php-cs-fixer && \
     chmod a+x php-cs-fixer && \
     mv php-cs-fixer /usr/local/bin/php-cs-fixer
 
