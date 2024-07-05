@@ -4,11 +4,33 @@ declare(strict_types=1);
 namespace Foundation;
 
 use Generator;
+use InvalidArgumentException;
 use StoragePhpClient\Foundation\Credential;
 use PHPUnit\Framework\TestCase;
 
 final class CredentialTest extends TestCase
 {
+    public static function invalidCredentialProvider(): Generator
+    {
+        yield 'case: foo.' => [
+            'dsn' => 'foo',
+        ];
+        yield 'case: authority not exist.' => [
+            'dsn' => 'https://example.com',
+        ];
+    }
+
+    /**
+     * @dataProvider invalidCredentialProvider
+     * @param string $dsn
+     * @return void
+     */
+    public function testInvalidCredential(string $dsn)
+    {
+        $this->expectException(InvalidArgumentException::class);
+        new Credential($dsn, 'nonce', 'realm', 0, 'cnonce');
+    }
+
     public static function credentialProvider(): Generator
     {
         yield 'case: normal' => [
@@ -39,7 +61,7 @@ final class CredentialTest extends TestCase
      * @param string $cnonce
      * @return void
      */
-    public function test__construct(
+    public function testCredential(
         string $dsn,
         string $endpoint,
         string $clientId,
@@ -83,5 +105,6 @@ final class CredentialTest extends TestCase
             $validResponse,
         );
         $this->assertSame($expectedDigest, $credential->authorizationDigest($expectedMethod, $expectedPath));
+        $this->assertSame($endpoint, $credential->getEndpoint());
     }
 }

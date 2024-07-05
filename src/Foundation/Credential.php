@@ -3,6 +3,9 @@ declare(strict_types=1);
 
 namespace StoragePhpClient\Foundation;
 
+use http\Exception\RuntimeException;
+use InvalidArgumentException;
+
 final class Credential
 {
     private const ALGORITHM_MAP = [
@@ -21,6 +24,10 @@ final class Credential
         private readonly ?string $cnonce = null
     ) {
         ['endpoint' => $this->endpoint, 'authority' => $authority] = self::parseDsn($this->dsn);
+
+        if (!str_contains($authority, ':')) {
+            throw new InvalidArgumentException('Invalid DSN format');
+        }
         [$this->clientId, $this->clientSecret] = explode(':', $authority);
     }
 
@@ -31,7 +38,7 @@ final class Credential
     private static function parseDsn(string $dsn): array
     {
         if (preg_match('#\A(?<scheme>https?://)((?<authority>\S[^@]+)@)?(?<host>\S+)\z#', $dsn, $matches) === false) {
-            return ['endpoint' => '', 'authority' => ''];
+            return ['endpoint' => '', 'authority' => '']; // @codeCoverageIgnore
         }
 
         return [
