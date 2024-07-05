@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 
 final class ApiParamTest extends TestCase
 {
-    public function testNoBody()
+    public function testNoBody(): void
     {
         $apiParam = new class extends ApiParam {
             public function getMethod(): string
@@ -29,7 +29,7 @@ final class ApiParamTest extends TestCase
         $this->assertNull($apiParam->getBody());
     }
 
-    public function testJsonBody()
+    public function testJsonBody(): void
     {
         $jsonApiParam = new class() extends ApiParam implements \JsonSerializable {
             public function getMethod(): string

@@ -29,7 +29,7 @@ final class RequestFactoryTest extends TestCase
     }
 
 
-    public function test__construct()
+    public function test__construct(): void
     {
         $requestFactory = new RequestFactory(
             Psr17FactoryDiscovery::findRequestFactory(),
@@ -42,7 +42,7 @@ final class RequestFactoryTest extends TestCase
      * @return void
      * @covers ::buildUriString
      */
-    public function testBuildUrlString()
+    public function testBuildUrlString(): void
     {
         $this->assertSame(
             'https://example.com/api/v1/test',

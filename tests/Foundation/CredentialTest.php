@@ -25,7 +25,7 @@ final class CredentialTest extends TestCase
      * @param string $dsn
      * @return void
      */
-    public function testInvalidCredential(string $dsn)
+    public function testInvalidCredential(string $dsn): void
     {
         $this->expectException(InvalidArgumentException::class);
         new Credential($dsn, 'nonce', 'realm', 0, 'cnonce');
