@@ -13,6 +13,7 @@ final class CredentialTest extends TestCase
         return [
             'case: normal' => [
                 'dsn' => 'https://clientId:clientSecret@example.com',
+                'endpoint' => 'https://example.com',
                 'clientId' => 'clientId',
                 'clientSecret' => 'clientSecret',
                 'nonce' => 'nonce',
@@ -28,6 +29,7 @@ final class CredentialTest extends TestCase
     /**
      * @dataProvider credentialProvider
      * @param string $dsn
+     * @param string $endpoint
      * @param string $clientId
      * @param string $clientSecret
      * @param string $nonce
@@ -40,6 +42,7 @@ final class CredentialTest extends TestCase
      */
     public function test__construct(
         string $dsn,
+        string $endpoint,
         string $clientId,
         string $clientSecret,
         string $nonce,
@@ -56,6 +59,8 @@ final class CredentialTest extends TestCase
             $nonceCount,
             $cnonce,
         );
+        $this->assertSame($endpoint, $credential->getEndpoint());
+
         $expectedBasic = 'Basic ' . base64_encode("$clientId:$clientSecret");
         $this->assertSame($expectedBasic, $credential->authorizationBasic());
 

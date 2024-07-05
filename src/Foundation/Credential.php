@@ -96,4 +96,9 @@ final class Credential
             $validResponse
         );
     }
+
+    public function getEndpoint(): string
+    {
+        return $this->endpoint;
+    }
 }
