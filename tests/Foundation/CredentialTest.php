@@ -3,26 +3,25 @@ declare(strict_types=1);
 
 namespace Foundation;
 
+use Generator;
 use StoragePhpClient\Foundation\Credential;
 use PHPUnit\Framework\TestCase;
 
 final class CredentialTest extends TestCase
 {
-    public static function credentialProvider(): array
+    public static function credentialProvider(): Generator
     {
-        return [
-            'case: normal' => [
-                'dsn' => 'https://clientId:clientSecret@example.com',
-                'endpoint' => 'https://example.com',
-                'clientId' => 'clientId',
-                'clientSecret' => 'clientSecret',
-                'nonce' => 'nonce',
-                'algorithm' => 'sha256', // 固定
-                'realm' => 'Secret Zone',
-                'nonceCount' => 0,
-                'qop' => 'auth', // 固定
-                'cnonce' => 'cnonce',
-            ],
+        yield 'case: normal' => [
+            'dsn' => 'https://clientId:clientSecret@example.com',
+            'endpoint' => 'https://example.com',
+            'clientId' => 'clientId',
+            'clientSecret' => 'clientSecret',
+            'nonce' => 'nonce',
+            'algorithm' => 'sha256', // 固定
+            'realm' => 'Secret Zone',
+            'nonceCount' => 0,
+            'qop' => 'auth', // 固定
+            'cnonce' => 'cnonce',
         ];
     }
 
