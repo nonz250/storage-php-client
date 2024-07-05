@@ -12,6 +12,7 @@ final class CredentialTest extends TestCase
     {
         return [
             'case: normal' => [
+                'dsn' => 'https://clientId:clientSecret@example.com',
                 'clientId' => 'clientId',
                 'clientSecret' => 'clientSecret',
                 'nonce' => 'nonce',
@@ -26,6 +27,7 @@ final class CredentialTest extends TestCase
 
     /**
      * @dataProvider credentialProvider
+     * @param string $dsn
      * @param string $clientId
      * @param string $clientSecret
      * @param string $nonce
@@ -37,6 +39,7 @@ final class CredentialTest extends TestCase
      * @return void
      */
     public function test__construct(
+        string $dsn,
         string $clientId,
         string $clientSecret,
         string $nonce,
@@ -47,8 +50,7 @@ final class CredentialTest extends TestCase
         string $cnonce
     ): void {
         $credential = new Credential(
-            $clientId,
-            $clientSecret,
+            $dsn,
             $nonce,
             $realm,
             $nonceCount,

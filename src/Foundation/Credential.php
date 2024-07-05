@@ -9,15 +9,37 @@ final class Credential
         'SHA-256' => 'sha256',
     ];
 
+    private readonly string $endpoint;
+    private readonly string $clientId;
+    private readonly string $clientSecret;
+
     public function __construct(
-        private readonly string $clientId,
-        private readonly string $clientSecret,
+        private readonly string $dsn,
         private readonly string $nonce,
         private readonly string $realm = 'Secret Zone',
         private  int $nonceCount = 0,
         private readonly ?string $cnonce = null
     ) {
+        ['endpoint' => $this->endpoint, 'authority' => $authority] = self::parseDsn($this->dsn);
+        [$this->clientId, $this->clientSecret] = explode(':', $authority);
     }
+
+    /**
+     * @param string $dsn
+     * @return array{endpoint: string, authority: string}
+     */
+    private static function parseDsn(string $dsn): array
+    {
+        if (preg_match('#\A(?<scheme>https?://)((?<authority>\S[^@]+)@)?(?<host>\S+)\z#', $dsn, $matches) === false) {
+            return ['endpoint' => '', 'authority' => ''];
+        }
+
+        return [
+            'endpoint' => sprintf('%s%s', $matches['scheme'] ?? '', $matches['host'] ?? ''),
+            'authority' => $matches['authority'] ?? '',
+        ];
+    }
+
 
     /**
      * @codeCoverageIgnore
@@ -27,6 +49,8 @@ final class Credential
     public function __debugInfo(): array
     {
         return [
+            'dsn' => $this->dsn,
+            'endpoint' => $this->endpoint,
             'clientId' => $this->clientId,
             'clientSecret' => '(secret)',
             'nonce' => $this->nonce,
