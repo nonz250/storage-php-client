@@ -26,8 +26,4 @@ RUN set -eux && \
     docker-php-ext-enable xdebug && \
     mkdir $PSYSH_DIR && wget $PHP_MANUAL_URL -P $PSYSH_DIR
 
-RUN curl -L https://github.com/FriendsOfPHP/PHP-CS-Fixer/releases/download/v3.9.5/php-cs-fixer.phar -o php-cs-fixer && \
-    chmod a+x php-cs-fixer && \
-    mv php-cs-fixer /usr/local/bin/php-cs-fixer
-
 COPY php.ini /usr/local/etc/php

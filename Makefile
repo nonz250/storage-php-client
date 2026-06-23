@@ -10,16 +10,16 @@ up:
 .PHONY: test
 test:
 	docker compose run --rm php php -version && \
-	docker compose run --rm php php-cs-fixer fix && \
+	docker compose run --rm php ./vendor/bin/php-cs-fixer fix && \
 	docker compose run --rm php ./vendor/bin/phpunit
 
 .PHONY: prod
 prod:
 	docker compose run --rm php php -version && \
-	docker compose run --rm php php-cs-fixer fix -vv && \
+	docker compose run --rm php ./vendor/bin/php-cs-fixer fix -vv && \
 	docker compose run --rm php ./vendor/bin/phpunit --coverage-text
 
 .PHONY: fix
 fix:
 	docker compose run --rm php php -version && \
-	docker compose run --rm php php-cs-fixer fix
+	docker compose run --rm php ./vendor/bin/php-cs-fixer fix
